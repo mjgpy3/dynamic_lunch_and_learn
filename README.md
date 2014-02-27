@@ -12,13 +12,13 @@ All things lunchy and learny
 ## Between sessions
  - Homework
  - Members gather homework to follow next session
- - Gather presenters
+ - Presenters volunteer
 
 ## Session
  - Questions about homework
  - Sessions cover a single topic, members will present
  - Determine next session's topic
- - Gather presenters
+ - Presenters volunteer
 
 # Values
  - Collaboration -- active participation, questions, volunteering to present
