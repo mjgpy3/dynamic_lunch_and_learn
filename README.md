@@ -15,6 +15,7 @@ All things lunchy and learny
  - Presenters volunteer
 
 ## Session
+ - How many?
  - Questions about homework
  - Sessions cover a single topic, members will present
  - Determine next session's topic
