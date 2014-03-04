@@ -38,6 +38,8 @@ All things lunchy and learny
  - Software Craftsmanship
  - Incremental Development
  - Dependency Inversion and Inversion of Control
+ - Design by Contract
+ - Specific tools
 
 # Repository
  - Github
