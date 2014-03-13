@@ -28,13 +28,30 @@ Use the qualified name of a class, e.g.
 ```
 describe Foo::Bar::MyClass
 ```
-The `ExampleGroup` (and it's children) can access the
+The `ExampleGroup` (and its children) can access the
 qualified class with `described_class`
 
- - `describe`
-  - Should talk about some programming entity
- - `context`
-  - What (it is) and when (it should be used)
+## `context`
+### What is it
+It is just an alias of `describe`
+
+### General conventions
+Begin context with `'when'` or `'with'` and describe _state_, e.g.
+```
+context 'when a valid request is made'
+```
+### Rule of thumb
+If an `it` describes more than the action to be asserted, refactor, e.g.
+```
+  it 'returns 404 if the car is not found'
+```
+becomes
+```
+  context 'when the car is not found' do
+    it 'returns 404'
+  end
+```
+
  - `let`
   - What and benefit (vs. instance variables)
  - Factories
