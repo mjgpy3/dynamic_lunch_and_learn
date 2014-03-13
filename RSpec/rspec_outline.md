@@ -52,8 +52,18 @@ becomes
   end
 ```
 
- - `let`
-  - What and benefit (vs. instance variables)
+## `let`
+### Prefer to instance variables
+ - `let` uses lazily loaded methods, caching values after first call
+  - `NameError` if mistype
+   - What you might expect on a mistype
+  - Instance variables return `nil`
+   - Can cause false negatives or positives, or unexpected errors
+
+## Factories
+### Why factories trump fixtures
+ - 
+
  - Factories
   - Why the community favors them over fixtures
   - FactoryGirl
