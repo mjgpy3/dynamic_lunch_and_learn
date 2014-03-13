@@ -11,6 +11,28 @@ RSpec Outline
  - Iterative development (baby steps)
 
 # Best Practices
+## `describe`
+### Method conventions
+
+Use `.` or `::` when talking about class methods, e.g.
+```
+describe '.some_class_method'
+```
+
+Use `#` when talking about instance methods, e.g.
+```
+describe '#some_instance_method'
+```
+### Class conventions
+Use the qualified name of a class, e.g.
+```
+describe Foo::Bar::MyClass
+```
+The `ExampleGroup` (and it's children) can access the
+qualified class with `described_class`
+
+ - `describe`
+  - Should talk about some programming entity
  - `context`
   - What (it is) and when (it should be used)
  - `let`
@@ -29,15 +51,3 @@ RSpec Outline
   - Why?
  - `should` vs. `expect`
   - Why `expect` is preferred
-
-# The case for RSpec
- - Semantics
-  - Naturally more DRY?
-  - Readability
-  - `pending`
-
-# The case against RSpec
- - Complexity
-  - Readability
-  - Alternatives are simpler and more familiar
- - Forced organization
