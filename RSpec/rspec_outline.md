@@ -60,7 +60,25 @@ becomes
   - Instance variables return `nil` (false positives/negatives, unexpected errors)
 
 ## `should` vs. `expect`
-
+### `expect` is newer and preferred 
+ - `should` is defined on `Kernel` not `BasicObject` so if an object 
+   inherits from `BasicObject` `should` will not exist on it
+ - `expect` is more readable when testing blocks, e.g.
+```ruby
+lambda { do_something }.should raise_error(AnError)
+# vs.
+expect { do_something }.to raise_error(AnError)
+```
+ - `should` has some unexpected behavior, e.g., in Ruby <= 1.8,
+```ruby
+# This spec passes
+describe Integer do
+  it "sucks" do
+    10.should == 10
+    10.should != 10 # => !(10.should.==(10))
+  end
+end
+```
 
 ## Factories
  - Provide a DSL for specifying test data (from specific classes)
@@ -125,7 +143,6 @@ factory :user_outside_database do
 end
 ```
 
-
 #### Stubbed Objects
 Factory girl makes stubbing an entire object easy, e.g.
 ```ruby
@@ -138,7 +155,3 @@ Acc. to Martin Fowler in "Mocks Aren't Stubs"
  - **Fake**, objects actually have working implementations, but usually take some shortcut which makes them not suitable for production (an in memory database is a good example).
  - **Stubs**, provide canned answers to calls made during the test, usually not responding at all to anything outside what's programmed in for the test. Stubs may also record information about calls, such as an email gateway stub that remembers the messages it 'sent', or maybe only how many messages it 'sent'.
  - **Mocks**, [...] objects pre-programmed with expectations which form a specification of the calls they are expected to receive.
-
-
- - `should` vs. `expect`
-  - Why `expect` is preferred
