@@ -15,17 +15,17 @@ RSpec Outline
 ### Method conventions
 
 Use `.` or `::` when talking about class methods, e.g.
-```
+```ruby
 describe '.some_class_method'
 ```
 
 Use `#` when talking about instance methods, e.g.
-```
+```ruby
 describe '#some_instance_method'
 ```
 ### Class conventions
 Use the qualified name of a class, e.g.
-```
+```ruby
 describe Foo::Bar::MyClass
 ```
 The `ExampleGroup` (and its children) can access the
@@ -38,16 +38,16 @@ It is just an alias of `describe`
 
 ### General conventions
 Begin context with `'when'` or `'with'` and describe _state_, e.g.
-```
+```ruby
 context 'when a valid request is made'
 ```
 ### Rule of thumb
-If an `it` describes more than the action to be asserted, refactor, e.g.
-```
+If an `it` describes more than the action and expectation, refactor, e.g.
+```ruby
   it 'returns 404 if the car is not found'
 ```
 becomes
-```
+```ruby
   context 'when the car is not found' do
     it 'returns 404'
   end
@@ -69,9 +69,11 @@ becomes
 ### FactoryGirl Features
 #### Traits
 Name a group of attributes on an entity, e.g.
-```
+```ruby
 FactoryGirl.define do
-  factory :show
+  factory :tv_show
+
+    # TODO: Use better, add SP
     
     trait :live_action do
       name "Breaking Bad"
@@ -94,14 +96,14 @@ create(:show, :live_action)
 
 #### Lazy Attributes
 Use a block instead of static data, e.g.
-```
+```ruby
 # ...
 location { Locations.get_current }
 ```
 
 #### Sequences
 Provide incrementing numbers for attributes, e.g.
-```
+```ruby
 FactoryGirl.define do
   sequence :email do |n|
     "user#{n}@foo.bar"
@@ -115,9 +117,18 @@ FactoryGirl.generate :email
 # => user2@foo.bar
 ```
 
+#### `skip_create`
+Tells FactoryGirl not to try to save the entity once created, e.g.
+```ruby
+factory :user_outside_database do
+  skip_create
+end
+```
+
+
 #### Stubbed Objects
 Factory girl makes stubbing an entire object easy, e.g.
-```
+```ruby
 the_black_knight = FactoryGirl.build_stubbed(:monty_python_character)
 ```
 
