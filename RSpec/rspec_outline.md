@@ -29,7 +29,8 @@ Use the qualified name of a class, e.g.
 describe Foo::Bar::MyClass
 ```
 The `ExampleGroup` (and its children) can access the
-qualified class with `described_class`
+qualified class with `described_class` or an instance
+of the class with `subject`
 
 ## `context`
 ### What is it
@@ -55,26 +56,78 @@ becomes
 ## `let`
 ### Prefer to instance variables
  - `let` uses lazily loaded methods, caching values after first call
-  - `NameError` if mistype
-   - What you might expect on a mistype
-  - Instance variables return `nil`
-   - Can cause false negatives or positives, or unexpected errors
+  - `NameError` if mistype (what you might expect on a mistype)
+  - Instance variables return `nil` (false positives/negatives, unexpected errors)
+
+## `should` vs. `expect`
+
 
 ## Factories
-### Why factories trump fixtures
- - 
+ - Provide a DSL for specifying test data (from specific classes)
+ - More work up front, easing future maintenance (centralized definition of test data)
 
- - Factories
-  - Why the community favors them over fixtures
-  - FactoryGirl
-   - Example
- - Test doubles
-  - Mocks vs. stubs (maybe fakes and dummy too?)
-  - When to mock
-   - Example
-  - When to stub
-   - Example
- - `guard`
-  - Why?
+### FactoryGirl Features
+#### Traits
+Name a group of attributes on an entity, e.g.
+```
+FactoryGirl.define do
+  factory :show
+    
+    trait :live_action do
+      name "Breaking Bad"
+      certificate :tv_14
+    end
+
+    trait :cartoon do
+      name "Adventure Time"
+      certificate :tv_pg
+    end
+
+  end
+end
+
+# Create instance
+create(:show, :live_action)
+```
+ - Traits can be used within traits to mix-in
+ - _See FactoryGirl's readme for more ways of specifying traits_
+
+#### Lazy Attributes
+Use a block instead of static data, e.g.
+```
+# ...
+location { Locations.get_current }
+```
+
+#### Sequences
+Provide incrementing numbers for attributes, e.g.
+```
+FactoryGirl.define do
+  sequence :email do |n|
+    "user#{n}@foo.bar"
+  end
+end
+
+FactoryGirl.generate :email
+# => user1@foo.bar
+
+FactoryGirl.generate :email
+# => user2@foo.bar
+```
+
+#### Stubbed Objects
+Factory girl makes stubbing an entire object easy, e.g.
+```
+the_black_knight = FactoryGirl.build_stubbed(:monty_python_character)
+```
+
+## Test Doubles
+Acc. to Martin Fowler in "Mocks Aren't Stubs"
+ - **Dummy**, objects are passed around but never actually used. Usually they are just used to fill parameter lists.
+ - **Fake**, objects actually have working implementations, but usually take some shortcut which makes them not suitable for production (an in memory database is a good example).
+ - **Stubs**, provide canned answers to calls made during the test, usually not responding at all to anything outside what's programmed in for the test. Stubs may also record information about calls, such as an email gateway stub that remembers the messages it 'sent', or maybe only how many messages it 'sent'.
+ - **Mocks**, [...] objects pre-programmed with expectations which form a specification of the calls they are expected to receive.
+
+
  - `should` vs. `expect`
   - Why `expect` is preferred
