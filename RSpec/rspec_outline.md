@@ -142,10 +142,29 @@ end
 ```
 
 #### Stubbed Objects
-Factory girl makes stubbing an entire object easy, e.g.
+FactoryGirl makes stubbing an entire object easy, e.g.
 ```ruby
 the_black_knight = FactoryGirl.build_stubbed(:monty_python_character)
 ```
+
+#### Hooks
+FactoryGirl provides four hooks, e.g.
+```ruby
+after(:build)   # After FactoryGirl.build
+before(:create) # Before FactoryGirl.create
+after(:create)  # After FactoryGirl.create
+after(:stub)    # After FactoryGirl.build_stubbed
+
+# Usage might look like...
+
+factory :user do
+  after(:build) { |user| generate_hashed_password(user) }
+end
+```
+
+## Controller Conventions
+See [the docs](https://www.relishapp.com/rspec/rspec-rails/docs/controller-specs) for some of the helpful tools for testing controllers that RSpec provides
+See [rspec-style-guide](https://github.com/howaboutwe/rspec-style-guide#controllers) for best practices
 
 ## Test Doubles
 
@@ -202,3 +221,9 @@ describe Patron do
 
 end
 ```
+
+# Resources
+ - [RSpec best practices](http://betterspecs.org/)
+ - [FactoryGirl](https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md)
+ - [Controller testing](https://www.relishapp.com/rspec/rspec-rails/docs/controller-specs)
+ - [Rails specific best practices](https://github.com/howaboutwe/rspec-style-guide)
