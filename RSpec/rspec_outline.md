@@ -203,7 +203,7 @@ end
 By above, use mocks to verify that a method was called, e.g.
 ```ruby
 describe Patron do
-  
+
   context 'when the patron is happy' do
 
     before(:each) do
