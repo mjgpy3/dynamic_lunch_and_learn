@@ -110,6 +110,11 @@ end
 ### Mocking Dependencies of Dependencies (of Dependencies of Dependencies)
  - Smell, consider Law of Demeter
 
+## Why Mock?
+ - Speed
+ - Isolation?
+ - Reduce complexity?
+
 # Questions to Consider
  - What is the purpose of tests?
   - Confidence (refactoring and making changes)
