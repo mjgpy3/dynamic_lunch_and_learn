@@ -1,4 +1,4 @@
-## Test Doubles
+# Test Doubles
 
 _double_ is the broad category of objects that stand-in for real data in test
 
@@ -10,7 +10,7 @@ Acc. to Martin Fowler in "Mocks Aren't Stubs"
  - **Stubs**, provide canned answers to calls made during the test, usually not responding at all to anything outside what's programmed in for the test. Stubs may also record information about calls, such as an email gateway stub that remembers the messages it 'sent', or maybe only how many messages it 'sent'.
  - **Mocks**, [...] objects pre-programmed with expectations which form a specification of the calls they are expected to receive.
 
-### Stubs
+## Stubs
 By above, stub when you require certain functionality that the SUT needs to force the condition to be tested, e.g.
 ```ruby
 describe Warrior do
@@ -40,10 +40,12 @@ describe Warrior do
 end
 ```
 
-### Mocks
+## Mocks
 By above, use mocks to verify that a method was called, e.g.
 ```ruby
 describe Patron do
+
+  # ...
 
   context 'when the patron is happy' do
 
@@ -52,9 +54,7 @@ describe Patron do
     end
 
     it 'gives a tip upon leaving' do
-      bartender = double("Bartender")
-
-      expect(bartender).to receive(:give_tip).with(anything)
+      expect(waiter).to receive(:give_tip).with(anything)
       subject.leave_bar
     end
 
@@ -62,3 +62,16 @@ describe Patron do
 
 end
 ```
+
+# When to Mock
+
+*WARNING:* the following is heavily my opinion, please fight it as you see fit!
+
+## Mocking within the class/entity under test
+Generally a code smell, indicating, either:
+ 1. Too many responsibilities in class
+ 2. Method is too complex
+ 3. Method references too many, or too complex dependencies
+
+## Mocking dependencies
+
