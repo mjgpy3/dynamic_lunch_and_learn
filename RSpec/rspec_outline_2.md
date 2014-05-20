@@ -1,3 +1,6 @@
+# Question
+ - How much mocking should occur?
+
 # Test Doubles
 
 _double_ is the broad category of objects that stand-in for real data in test
@@ -63,7 +66,7 @@ describe Patron do
 end
 ```
 
-# When to Mock
+# When to Mock/Stub
 
 *WARNING:* the following is heavily my opinion, please fight it as you see fit!
 
@@ -75,3 +78,50 @@ Generally a code smell, indicating, either:
 
 ## Mocking dependencies
 
+### Mocking direct dependencies
+ 1. Good if complementary to a `context` or `describe`, e.g.
+```ruby
+...
+  context 'when it is sunny out' do
+    before(:each) { Forecast.stub(:weather).and_return(sunny) }
+...
+
+ 2. Bad if overdone or done without clear context, e.g.
+```ruby
+describe Door do
+
+  # ...
+
+  before(:each) do
+    clockwise_key_hole.stub(:twist_clockwise).and_return(unlocked_state)
+    clockwise_key_hole.stub(:twist_clockwise_cw).and_return(locked_state)
+    counter_clockwise_key_hole.stub(:twist_clockwise).and_return(locked_state)
+    counter_clockwise_key_hole.stub(:twist_counter_cw).and_return(unlocked_state)
+  end
+
+  it '...'
+
+  it '...'
+
+end
+
+```
+
+### Mocking Dependencies of Dependencies (of Dependencies of Dependencies)
+ - Smell, consider Law of Demeter
+
+# Questions to Consider
+ - What is the purpose of tests?
+  - Confidence (refactoring and making changes)
+  - Feedback
+  - Smells
+  - Living Documentation (behavior and assumptions)
+ - What will developers think if they see this same test N years from now?
+  - Does it express the code's intent?
+ - What do we mean by "isolation of tests"?
+ - How many ways can this *test* break, and what will it tell me if it does?
+
+ - Resources:
+  - http://eggsonbread.com/2010/03/28/my-rspec-best-practices-and-tips/
+  - http://martinfowler.com/bliki/UnitTest.html
+  - http://betterspecs.org/
